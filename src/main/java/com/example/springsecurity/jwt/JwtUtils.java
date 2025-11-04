@@ -23,7 +23,7 @@ public class JwtUtils {
 
 
     @Value("${spring.app.jwtExpirationMs}")
-    private int jwtExxpirationMs;
+    private int jwtExpirationMs;
 
     @Value("${spring.app.jwtSecret}")
     private String jwtSecret;
@@ -42,12 +42,12 @@ public class JwtUtils {
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
-                .expiration(new Date((new Date().getTime() + jwtExxpirationMs)))
+                .expiration(new Date((new Date().getTime() + jwtExpirationMs)))
                 .signWith(key())
                 .compact();
     }
     //Getting username from JWT Token
-    public String getUserNameFromJTToken(String token){
+    public String getUserNameFromJwtToken(String token){
         return Jwts.parser()
                 .verifyWith((SecretKey) key())
                 .build().parseSignedClaims(token)
